@@ -1,0 +1,65 @@
+import matplotlib.pyplot as plt
+
+names = []
+pur_vals = []
+pyr_vals = []
+
+def analyze_fasta(file_path):
+    with open(file_path, 'r') as f:
+        data = f.readlines()
+
+    name = ""
+    dna = ""
+
+    for line in data:
+        line = line.strip()
+        if line.startswith(">"):
+            if name != "":
+                process_data(name, dna)
+            
+            parts = line[1:].split()
+            if len(parts) >= 2:
+                name = parts[0] + " " + parts[1]
+            else:
+                name = parts[0]
+            dna = ""
+        else:
+            dna = dna + line.upper()
+
+    if name != "":
+        process_data(name, dna)
+
+def process_data(organism, sequence):
+    length = len(sequence)
+    a_count = sequence.count('A')
+    g_count = sequence.count('G')
+    c_count = sequence.count('C')
+    t_count = sequence.count('T')
+    
+    purines = a_count + g_count
+    pyrimidines = c_count + t_count
+    
+    pur_p = (purines / length) * 100
+    pyr_p = (pyrimidines / length) * 100
+    names.append(organism)
+    pur_vals.append(pur_p)
+    pyr_vals.append(pyr_p)
+    
+    print(f"{organism}")
+    print(f"Total Bases:  + {length}")
+    print("Purine %: " + str(round(pur_p, 2)))
+    print("Pyrimidine %: " + str(round(pyr_p, 2)))
+    print("Ratio: " + str(round(purines/pyrimidines, 2)))
+    print("")
+
+analyze_fasta("all_insulin.fasta")
+
+# Making the graph
+plt.figure(figsize=(10, 6))
+plt.bar(names, pur_vals, label='Purines', color='skyblue')
+plt.bar(names, pyr_vals, bottom=pur_vals, label='Pyrimidines', color='salmon')
+
+plt.title('Insulin Gene Composition')
+plt.ylabel('Percentage')
+plt.legend()
+plt.show()
