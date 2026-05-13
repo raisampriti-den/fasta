@@ -93,4 +93,4 @@ This script was tested on insulin gene sequences sourced from NCBI.
 
 **Sampriti Halder**  
 B.Tech Biotechnology, SBST — Vellore Institute of Technology  
-[sampriti.halder.2025@vit.student.ac.in](mailto:sampriti.halder.2025@vit.student.ac.in)
+[sampritihalder.2025@vit.student.ac.in](mailto:sampritihalder.2025@vit.student.ac.in)
